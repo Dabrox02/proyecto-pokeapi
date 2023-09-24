@@ -1,22 +1,34 @@
 import { getPokemons, getPokemonName } from "./modules/api.js";
-import { cardPokemon } from "./modules/components.js";
+import { grillaPokemon } from "./modules/components.js";
 
 const d = document;
-let data = await getPokemonName("charmander");
-let { sprites: {front_default} } = data;
-console.log(data);
-console.log(front_default);
+const grilla = d.querySelector("#pokemon-grill");
+const nextBtn = d.querySelector("#next-page");
+const limitPokemons = d.querySelector("#limit-pokemons");
+var nextPage;
 
-let card = cardPokemon(data);
-let grilla = d.querySelector("#pokemon-grill")
-grilla.insertAdjacentElement("beforeend", card);
-card = cardPokemon(data);
-grilla.insertAdjacentElement("beforeend", card);
-card = cardPokemon(data);
-grilla.insertAdjacentElement("beforeend", card);
-card = cardPokemon(data);
-grilla.insertAdjacentElement("beforeend", card);
+addEventListener("DOMContentLoaded", async (e) => {
+    const grilla = d.querySelector("#pokemon-grill");
+    nextPage = await grillaPokemon({ grilla });
+})
 
+nextBtn.addEventListener("click", async (e) => {
+    const grilla = d.querySelector("#pokemon-grill");
+    nextPage = await grillaPokemon({ URI: nextPage, grilla });
+})
+
+limitPokemons.addEventListener("input", async (e) => {
+    try {
+        let limit = Number(e.target.value);
+        if (!isNaN(limit)) {
+            if (limit > 0) {
+                const grilla = d.querySelector("#pokemon-grill");
+                nextPage = await grillaPokemon({ grilla, limit });
+            }
+        }
+    } catch (error) {
+    }
+})
 
 
 
