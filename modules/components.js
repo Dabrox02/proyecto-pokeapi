@@ -10,7 +10,7 @@ export const cardPokemon = (data) => {
 }
 
 export const grillaPokemon = async ({ URI = undefined, limit = 20, grilla }) => {
-    let { next: nextPage, results: pokemons } = await getPokemons({ URI, limit });
+    let { previous: prevPage, next: nextPage, results: pokemons } = await getPokemons({ URI, limit });
     let grillaTmp = grilla.cloneNode()
     pokemons.forEach(async (e) => {
         let { name: pokemon } = e;
@@ -19,5 +19,5 @@ export const grillaPokemon = async ({ URI = undefined, limit = 20, grilla }) => 
         grillaTmp.insertAdjacentElement("beforeend", card);
     });
     grilla.replaceWith(grillaTmp);
-    return nextPage;
+    return {prevPage, nextPage};
 }

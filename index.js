@@ -3,18 +3,35 @@ import { grillaPokemon } from "./modules/components.js";
 
 const d = document;
 const grilla = d.querySelector("#pokemon-grill");
+const prevBtn = d.querySelector("#prev-page");
 const nextBtn = d.querySelector("#next-page");
 const limitPokemons = d.querySelector("#limit-pokemons");
-var nextPage;
+var prevPage, nextPage;
 
 addEventListener("DOMContentLoaded", async (e) => {
     const grilla = d.querySelector("#pokemon-grill");
-    nextPage = await grillaPokemon({ grilla });
+    let pages = await grillaPokemon({ grilla });
+    prevPage = pages.prevPage;
+    nextPage = pages.nextPage;
 })
 
 nextBtn.addEventListener("click", async (e) => {
     const grilla = d.querySelector("#pokemon-grill");
-    nextPage = await grillaPokemon({ URI: nextPage, grilla });
+    let pages = await grillaPokemon({ URI: nextPage, grilla });
+    if(nextPage == null){
+        limitPokemons.value = "";
+    }
+    prevPage = pages.prevPage;
+    nextPage = pages.nextPage;
+})
+
+prevBtn.addEventListener("click", async (e) => {
+    const grilla = d.querySelector("#pokemon-grill");
+    if (prevPage) {
+        let pages = await grillaPokemon({ URI: prevPage, grilla });
+        prevPage = pages.prevPage;
+        nextPage = pages.nextPage;
+    }
 })
 
 limitPokemons.addEventListener("input", async (e) => {
@@ -23,7 +40,9 @@ limitPokemons.addEventListener("input", async (e) => {
         if (!isNaN(limit)) {
             if (limit > 0) {
                 const grilla = d.querySelector("#pokemon-grill");
-                nextPage = await grillaPokemon({ grilla, limit });
+                let pages = await grillaPokemon({ grilla, limit });
+                prevPage = pages.prevPage;
+                nextPage = pages.nextPage;
             }
         }
     } catch (error) {
