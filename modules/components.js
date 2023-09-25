@@ -25,18 +25,21 @@ export const grillaPokemon = async ({ URI = undefined, limit = 20, grilla }) => 
 export const statsPokemon = async (namePokemon) => {
     let data = await getPokemonName(namePokemon);
     let { stats, name, sprites: { front_default } } = data;
-    console.log(data);
-    console.log(stats, name, front_default);
     Swal.fire({
         title: `${name}`,
-        text: "Modal with a custom image.",
         imageUrl: `${front_default ? front_default : imgTmp}`,
         html: `
         ${stats.map(e => `
-            <input type="range" value="${e.base_stat}">
-            <label class="badge bg-secondary">
-                <b>${e.base_stat}</b> ${e.stat.name}
-            </label><br>`
+            <div class="flex flex-column flex-nowrap">
+                <div class="d-inline-block bg-dark text-center">
+                    <input type="range" value="${e.base_stat}">
+                </div>
+                <div class="d-inline-block bg-primary text-center">
+                    <label class="badge bg-secondary">
+                        <b>${e.base_stat}</b> ${e.stat.name}
+                    </label><br>
+                </div>
+            </div>`
         ).join("")}
         `,
     });
