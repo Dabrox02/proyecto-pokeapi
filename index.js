@@ -6,8 +6,6 @@ const prevBtn = d.querySelector("#prev-page");
 const nextBtn = d.querySelector("#next-page");
 var prevPage, nextPage;
 
-const $ = (e) => d.querySelector(e);
-
 addEventListener("DOMContentLoaded", async (e) => {
     const grilla = d.querySelector("#pokemon-grill");
     let pages = await grillaPokemon({ grilla });
@@ -23,7 +21,7 @@ d.addEventListener("click", async (e) => {
         await statsPokemon(pokemon)
     }
 
-    if (e.target.matches("#prev-page")) {
+    if (e.target.matches("button#prev-page")) {
         const grilla = d.querySelector("#pokemon-grill");
         if (prevPage) {
             let pages = await grillaPokemon({ URI: prevPage, grilla });
@@ -32,7 +30,7 @@ d.addEventListener("click", async (e) => {
         }
     }
 
-    if (e.target.matches("#next-page")) {
+    if (e.target.matches("button#next-page")) {
         const grilla = d.querySelector("#pokemon-grill");
         let pages = await grillaPokemon({ URI: nextPage, grilla });
         if (nextPage == null) {
@@ -53,7 +51,6 @@ d.addEventListener("click", async (e) => {
             "stats" : newStats,
             "sprite-front": "",
         }
-        
     }
 });
 

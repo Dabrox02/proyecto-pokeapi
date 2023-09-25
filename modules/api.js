@@ -2,15 +2,14 @@ import config from "./config.js";
 
 const d = document;
 
-export const getPokemons = async ({ URI = undefined, limit = undefined }) => {
+export const getPokemons = async ({ URI, limit } = {}) => {
+    const uri = URI || (limit ? `${config.URI_POKEMON}pokemon/?limit=${limit}` : `${config.URI_POKEMON}pokemon/`);
     try {
-        const uri = URI ? URI : limit ? `${config.URI_POKEMON}pokemon/?limit=${limit}` : `${config.URI_POKEMON}pokemon/`;
         const response = await fetch(uri);
         if (!response.ok) {
             throw new Error(`No se pudo obtener la lista de Pokémon (${response.status})`);
         }
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (error) {
         console.error('Error al obtener Pokémon:', error);
         throw error;
