@@ -18,7 +18,7 @@ addEventListener("DOMContentLoaded", async (e) => {
 d.addEventListener("click", async (e) => {
     if (e.target.matches(".card-pokemon img")) {
         let pokemon = e.target.getAttribute("alt");
-        await statsPokemon(pokemon)
+        await statsPokemon(pokemon);
     }
 
     if (e.target.matches("button#prev-page")) {
@@ -48,7 +48,7 @@ d.addEventListener("click", async (e) => {
         console.log(newStats);
         let body = {
             "nombre": "pikachu",
-            "stats" : newStats,
+            "stats": newStats,
             "sprite-front": "",
         }
     }
@@ -57,22 +57,19 @@ d.addEventListener("click", async (e) => {
 
 d.addEventListener("input", async (e) => {
     if (e.target.matches("#limit-pokemons")) {
-        try {
-            let limit = Number(e.target.value);
-            if (!isNaN(limit)) {
-                if (limit > 0) {
-                    const grilla = d.querySelector("#pokemon-grill");
-                    let pages = await grillaPokemon({ grilla, limit });
-                    prevPage = pages.prevPage;
-                    nextPage = pages.nextPage;
-                } else {
-                    const grilla = d.querySelector("#pokemon-grill");
-                    let pages = await grillaPokemon({ grilla, limit: 20 });
-                    prevPage = pages.prevPage;
-                    nextPage = pages.nextPage;
-                }
+        let limit = Number(e.target.value);
+        if (!isNaN(limit)) {
+            if (limit > 0) {
+                const grilla = d.querySelector("#pokemon-grill");
+                let pages = await grillaPokemon({ grilla, limit });
+                prevPage = pages.prevPage;
+                nextPage = pages.nextPage;
+            } else {
+                const grilla = d.querySelector("#pokemon-grill");
+                let pages = await grillaPokemon({ grilla, limit: 20 });
+                prevPage = pages.prevPage;
+                nextPage = pages.nextPage;
             }
-        } catch (error) {
         }
     }
 
@@ -89,7 +86,7 @@ d.addEventListener("input", async (e) => {
 
     if (e.target.matches("#swal2-html-container input")) {
         let nextLabel = e.target.nextElementSibling;
-        nextLabel.textContent = `${e.target.value} ${nextLabel.dataset.stat}`
+        nextLabel.textContent = `${e.target.value}/200 ${nextLabel.dataset.stat}`
     }
 })
 

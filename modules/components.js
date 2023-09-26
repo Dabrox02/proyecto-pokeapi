@@ -2,12 +2,12 @@ import { getPokemons, getPokemonName, getCategories, getPokemonsType } from "./a
 const d = document;
 
 const cardPokemon = (data) => {
-    const imgTmp = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/96px-Pok%C3%A9_Ball_icon.svg.png";
+    const imgTmp = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/200px-Pok%C3%A9_Ball_icon.svg.png";
     const { sprites: { front_default }, name } = data;
     return /*html*/`
-    <div class="card card-pokemon p-2">
-        <img src="${front_default ? front_default : imgTmp}" class="bg-white rounded bg-primary-hover" alt="${name}" loading="lazy">
-        <div class="badge text-bg-dark text-capitalize">${name}</div>
+    <div class="d-flex flex-column card-pokemon p-2 bg-white">
+        <img src="${front_default ? front_default : imgTmp}" class="bg-primary-hover" alt="${name}" loading="lazy">
+        <div class="name-pokemon badge text-bg-dark text-capitalize">${name}</div>
     </div>
     `
 }
@@ -49,9 +49,9 @@ export const statsPokemon = async (namePokemon) => {
         </div>
         ${stats.map(e => /*html*/`
             <div class="d-flex flex-column">
-                <input class="w-75 mx-auto" type="range" value="${e.base_stat}" data-stat="${e.stat.name}">
+                <input class="w-75 mx-auto" type="range" value="${e.base_stat}" data-stat="${e.stat.name}" max="200">
                 <label class="w-75 mx-auto badge bg-secondary text-capitalize" data-stat="${e.stat.name}">
-                    ${e.base_stat} ${e.stat.name}
+                    ${e.base_stat}/200 ${e.stat.name}
                 </label><br>
             </div>`
         ).join("")}
@@ -65,7 +65,7 @@ export const categPokemon = async (grilla) => {
     let { results: pokemons } = data;
     let grillaTmp = grilla.cloneNode();
     grillaTmp.insertAdjacentHTML("beforeend", /*html*/`
-        <div class="p-1">
+        <div class="categorie-option p-1">
             <input id="pokemon-todos" type="radio" value="todos" name="type" checked>
             <label for="pokemon-todos" class="text-capitalize">Todos</label>
         </div>
@@ -73,7 +73,7 @@ export const categPokemon = async (grilla) => {
     pokemons.forEach(async (e) => {
         let { name } = e;
         grillaTmp.insertAdjacentHTML("beforeend", /*html*/`
-        <div class="p-1">
+        <div class="categorie-option p-1">
             <input id="pokemon-${name}" type="radio" value="${name}" name="type">
             <label for="pokemon-${name}" class="text-capitalize">${name}</label>
         </div>
