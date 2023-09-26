@@ -1,4 +1,4 @@
-import { getPokemons, getPokemonName } from "./modules/api.js";
+import { getPokemons, getPokemonName, savePokemon } from "./modules/api.js";
 import { grillaPokemon, statsPokemon, categPokemon, grillaPokemonCateg } from "./modules/components.js";
 
 const d = document;
@@ -42,14 +42,19 @@ d.addEventListener("click", async (e) => {
 
     if (e.target.matches("#enviar-pokemon")) {
         let inputs = d.querySelectorAll("#swal2-html-container input");
+        let imgPokemon = d.querySelector(".img-pokemon");
         let keyStats = [...inputs].map((e) => e.dataset.stat);
         let valueStats = [...inputs].map((e) => e.value);
-        let newStats = keyStats.reduce((obj, key, index) => ({ ...obj, [key]: valueStats[index] }), {});
-        console.log(newStats);
+        let newStats = keyStats.reduce((obj, key, index) =>
+            ({ ...obj, [key]: valueStats[index] }), {});
         let body = {
-            "nombre": "pikachu",
+            "nombre": imgPokemon.getAttribute("alt"),
             "stats": newStats,
-            "sprite-front": "",
+            "sprite-front": imgPokemon.getAttribute("src")
+        }
+        let res = await savePokemon(body);
+        if (res.ok) {
+            
         }
     }
 });

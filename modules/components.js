@@ -45,17 +45,19 @@ export const statsPokemon = async (namePokemon) => {
         title: `${name.charAt(0).toUpperCase() + name.slice(1)}`,
         html: /*html*/`
         <div class="d-flex flex-column text-center">
-            <img class="mx-auto" width="50%" src=${front_default || imgTmp} >
+            <img class="img-pokemon mx-auto" width="50%" src=${front_default || imgTmp} alt="${name}">
         </div>
         ${stats.map(e => /*html*/`
             <div class="d-flex flex-column">
                 <input class="w-75 mx-auto" type="range" value="${e.base_stat}" data-stat="${e.stat.name}" max="200">
                 <label class="w-75 mx-auto badge bg-secondary text-capitalize" data-stat="${e.stat.name}">
                     ${e.base_stat}/200 ${e.stat.name}
-                </label><br>
+                </label>
             </div>`
         ).join("")}
-        <button id="enviar-pokemon" class="btn btn-warning">Ajustar</button> 
+        <div class="mt-3">
+            <button id="enviar-pokemon" class="btn btn-warning">Ajustar</button> 
+        </div>
         `,
     });
 }

@@ -60,3 +60,13 @@ export const getCategories = async () => {
         throw error;
     }
 }
+
+export const savePokemon = async (data) => {
+    const uri = `${config.URI_MOCKAPI}pokemons`;
+    const response = await fetch(uri, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    return response;
+}
