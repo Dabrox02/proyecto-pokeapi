@@ -62,11 +62,30 @@ export const getCategories = async () => {
 }
 
 export const savePokemon = async (data) => {
-    const uri = `${config.URI_MOCKAPI}pokemons`;
+    let existsPokemon = await pokemonExists(data.name);
+    const uri = existsPokemon.exists ? `${config.URI_MOCKAPI}pokemons/${existsPokemon.id}` : `${config.URI_MOCKAPI}pokemons`;
     const response = await fetch(uri, {
-        method: "POST",
+        method: existsPokemon.exists ? "PUT" : "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(data)
     })
     return response;
+}
+
+export const getPokemonsMockapi = async () => {
+    const uri = `${config.URI_MOCKAPI}pokemons`;
+    const response = await (await fetch(uri)).json();
+    return response;
+}
+
+export const getPokemonNameMock = async (namePokemon) => {
+    let pokemons = await getPokemonsMockapi();
+    let res = pokemons.filter((e) => e.name == namePokemon.toLowerCase());
+    return res[0];
+}
+
+export const pokemonExists = async (namePokemon) => {
+    let pokemons = await getPokemonsMockapi();
+    let res = pokemons.filter((e) => e.name == namePokemon.toLowerCase());
+    return res.length > 0 ? { "exists": true, "id": res[0].id } : { "exists": false, "id": undefined };
 }

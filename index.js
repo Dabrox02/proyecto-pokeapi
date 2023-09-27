@@ -1,4 +1,4 @@
-import { getPokemons, getPokemonName, savePokemon } from "./modules/api.js";
+import { savePokemon, getPokemonsMockapi, pokemonExists } from "./modules/api.js";
 import { grillaPokemon, statsPokemon, categPokemon, grillaPokemonCateg } from "./modules/components.js";
 
 const d = document;
@@ -45,16 +45,24 @@ d.addEventListener("click", async (e) => {
         let imgPokemon = d.querySelector(".img-pokemon");
         let keyStats = [...inputs].map((e) => e.dataset.stat);
         let valueStats = [...inputs].map((e) => e.value);
-        let newStats = keyStats.reduce((obj, key, index) =>
-            ({ ...obj, [key]: valueStats[index] }), {});
+        let newStats = keyStats.map((key, index) => ({ "base_stat": valueStats[index], "stat": { "name": key } }));
+
         let body = {
-            "nombre": imgPokemon.getAttribute("alt"),
-            "stats": newStats,
-            "sprite-front": imgPokemon.getAttribute("src")
+            "name": imgPokemon.getAttribute("alt"),
+            "stats": [...newStats],
+            "sprites": {
+                "front_default": imgPokemon.getAttribute("src")
+            }
         }
         let res = await savePokemon(body);
         if (res.ok) {
-            
+            Swal.close();
+            Swal.fire({
+                icon: 'success',
+                title: 'Cambios Hechos',
+                showConfirmButton: false,
+                timer: 2000
+            })
         }
     }
 });
