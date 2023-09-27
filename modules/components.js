@@ -1,4 +1,4 @@
-import { getPokemons, getPokemonName, getCategories, getPokemonsType } from "./api.js";
+import { getPokemons, getPokemonName, getCategories, getPokemonsType, pokemonExists, getPokemonNameMock } from "./api.js";
 const d = document;
 
 const cardPokemon = (data) => {
@@ -39,7 +39,14 @@ export const grillaPokemonCateg = async ({ URI, grilla }) => {
 
 export const statsPokemon = async (namePokemon) => {
     const imgTmp = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/227px-Pok%C3%A9_Ball_icon.svg.png";
-    let data = await getPokemonName(namePokemon);
+    let existsPokemon = await pokemonExists(namePokemon);
+    let data;
+    if (existsPokemon.exists) {
+        data = await getPokemonNameMock(namePokemon);
+    } else {
+        data = await getPokemonName(namePokemon);
+    }
+
     let { stats, name, sprites: { front_default } } = data;
     Swal.fire({
         title: `${name.charAt(0).toUpperCase() + name.slice(1)}`,
