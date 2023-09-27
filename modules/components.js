@@ -7,7 +7,7 @@ const cardPokemon = (data) => {
     return /*html*/`
     <div class="d-flex flex-column card-pokemon p-2 bg-white">
         <img src="${front_default ? front_default : imgTmp}" class="bg-primary-hover" alt="${name}" loading="lazy">
-        <div class="name-pokemon badge text-bg-dark text-capitalize">${name}</div>
+        <div class="name-pokemon rounded-1 text-bg-dark text-capitalize">${name}</div>
     </div>
     `
 }
