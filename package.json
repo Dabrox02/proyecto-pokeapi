@@ -4,7 +4,7 @@
   "description": "- [Jaider Steeven Mendoza Cardona](https://github.com/Dabrox02)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "json-server --watch data/db.json --port 5855"
   },
   "keywords": [],
   "author": "",
