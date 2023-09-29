@@ -63,7 +63,7 @@ export const getCategories = async () => {
 
 export const savePokemon = async (data) => {
     let existsPokemon = await pokemonExists(data.name);
-    const uri = existsPokemon.exists ? `${config.URI_MOCKAPI}pokemons/${existsPokemon.id}` : `${config.URI_MOCKAPI}pokemons`;
+    const uri = existsPokemon.exists ? `${config.URI_JSON_SERVER}pokemons/${existsPokemon.id}` : `${config.URI_JSON_SERVER}pokemons`;
     const response = await fetch(uri, {
         method: existsPokemon.exists ? "PUT" : "POST",
         headers: { "content-type": "application/json" },
@@ -73,7 +73,7 @@ export const savePokemon = async (data) => {
 }
 
 export const getPokemonsMockapi = async () => {
-    const uri = `${config.URI_MOCKAPI}pokemons`;
+    const uri = `${config.URI_JSON_SERVER}pokemons`;
     const response = await (await fetch(uri)).json();
     return response;
 }
