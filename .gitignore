@@ -1,3 +1,5 @@
 /scss
 /css/style.css.map
 /assets/bootstrap/scss
+/node_modules
+package-lock.json
