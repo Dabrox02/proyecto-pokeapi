@@ -66,6 +66,7 @@ export const statsPokemon = async (namePokemon) => {
             <button id="enviar-pokemon" class="btn btn-warning">Ajustar</button> 
         </div>
         `,
+        confirmButtonText: 'Cerrar'
     });
 }
 
